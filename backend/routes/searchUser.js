@@ -15,8 +15,6 @@ router.get('/', async (req, res) => {
 
         const matchedUsers = await User.find({ username: { $regex: new RegExp(username, 'i') } });
 
-
-        console.log("Matched users:", matchedUsers);
         res.json(matchedUsers);
     } catch (error) {
         res.status(500).json({ message: "Error fetching users", error });
