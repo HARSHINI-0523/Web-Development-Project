@@ -25,7 +25,6 @@ function Profile() {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                console.log(response.data)
                 setUserProfile(response.data);
                 fetchPosts();
                 fetchReposts();
@@ -46,9 +45,7 @@ function Profile() {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            console.log("Response", response)
             setPosts(response.data);
-            console.log("Response data", posts);
         } catch (err) {
             console.error('Fetch Posts Error:', err);
             setError('Failed to load posts.');

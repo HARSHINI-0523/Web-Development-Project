@@ -5,7 +5,7 @@ const auth = require('../middleware/authMiddleware.js');
 // Get user's reposts
 router.get('/user', auth.protect, async (req, res) => {
   try {
-    const reposts = await Repost.find({ user: req.user.id });
+    const reposts = await Repost.find({ userId: req.user.id });
     res.json(reposts);
   } catch (err) {
     console.error(err.message);

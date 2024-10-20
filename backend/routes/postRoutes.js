@@ -32,9 +32,8 @@ router.post('/', auth.protect, upload.single('image'), async (req, res) => {
 
 router.get('/user', auth.protect,async (req, res) => {
     try {
-        console.log(req.user.id)
+        
       const posts = await Post.find({ user: req.user.id });
-      console.log('Posts',posts);
       res.json(posts);
     } catch (err) {
       console.error(err.message);

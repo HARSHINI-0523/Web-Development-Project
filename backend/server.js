@@ -25,7 +25,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/searchUser', searchUserRoutes);
 app.use('/api/posts', postRoutes); // Ensure this line is added
-app.use('/reposts', repostRoutes);
+app.use('/api/reposts', repostRoutes);
 // Connect to MongoDB
 mongoose
     .connect(process.env.MONGO_URI)
