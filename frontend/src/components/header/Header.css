@@ -1,0 +1,55 @@
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: black;
+    color: white;
+    z-index: 1000;
+    margin-top: -25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 100px;
+}
+
+.logo {
+    margin-left: 20px;
+    font-size: 1.5em;
+}
+
+.nav-list {
+    list-style: none;
+    display: flex;
+    margin-right: 20px;
+}
+
+
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+.nav-link:hover {
+    color: lightgray;
+}
+
+.icon {
+    margin-right: 5px;
+    vertical-align: middle;
+}
+html {
+    scroll-behavior: smooth;
+  }
+  .header-brand {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-weight: bold;
+    letter-spacing: 2px;
+    transition: color 0.3s;
+}
+
+.header-brand:hover {
+    color: #3498db; 
+}

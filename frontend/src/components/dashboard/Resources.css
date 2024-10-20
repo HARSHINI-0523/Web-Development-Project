@@ -1,0 +1,58 @@
+.main-content {
+    width: 80%;
+    padding: 2rem;
+}
+.main-content h2 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+}
+.main-content form {
+    display: flex;
+    margin-bottom: 2rem;
+}
+.main-content form input,
+.main-content form button,
+.main-content form select {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+}
+.main-content form input {
+    width: 33%;
+    margin-right: 1rem;
+}
+.main-content form button {
+    width: 33%;
+    margin-right: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.main-content form select {
+    width: 33%;
+}
+.main-content .results {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+.main-content .results .result {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+.main-content .results .result img {
+    margin-bottom: 1rem;
+    border-radius: 0.25rem;
+}
+.main-content .results .result a {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+
+.ele{
+    margin:30px;
+}

@@ -1,0 +1,234 @@
+.network-container {
+    padding: 20px;
+}
+
+.calendar-container {
+    display: flex; /* Use flex to arrange calendar and events side by side */
+}
+
+.calendar {
+    margin-right: 20px; /* Space between calendar and events */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    flex: 1; /* Allow the calendar to grow */
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.calendar h3 {
+    margin: 0;
+    text-align: center;
+}
+
+.previous-month-button,
+.next-month-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.days-of-week {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.day {
+    text-align: center;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.calendar-date {
+    text-align: center;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.calendar-date:hover {
+    background-color: #e7f3ff;
+}
+
+.calendar-date.empty {
+    background-color: transparent;
+}
+
+.event-section {
+    background-color: #e7f3ff;
+    padding: 15px;
+    border-radius: 8px;
+    width: 300px; /* Fixed width for event section */
+}
+
+.event {
+    margin-bottom: 10px;
+}
+
+.event h4 {
+    margin: 0;
+}
+
+.event p {
+    margin: 5px 0 0;
+}
+
+.upcoming-events {
+    margin-top: 20px; /* Add margin above upcoming events section */
+    padding: 15px;
+    background-color: #f0f8ff; /* Light blue background for upcoming events */
+    border-radius: 8px;
+}
+
+.upcoming-event {
+    margin-bottom: 10px;
+}
+
+.upcoming-event h4 {
+    margin: 0;
+}
+
+.upcoming-event p {
+    margin: 5px 0 0;
+}
+
+.network-header {
+    display: flex;
+    justify-content: space-between; /* Ensure Network and search bar align side-by-side */
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px 0;
+}
+
+.network-header h2 {
+    margin: 0; /* Removes extra margin around the heading */
+    flex: 1; /* Allow the heading to take up available space */
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+}
+
+.search-form input {
+    padding: 5px;
+    margin-right: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 180px;
+}
+
+.search-form button {
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+}
+
+.search-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Plus Button */
+.plus-button {
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 24px;
+    margin-left: 10px;
+    position:relative;
+    z-index: 10;
+}
+
+.plus-button:hover {
+    background-color: #0056b3;
+}
+
+/* Modal */
+/* Modal - Ensure visibility when open */
+.modal {
+    display: flex; /* Default is hidden, but this will change via JS */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dim background */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden; /* Initially hidden */
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s;
+}
+
+/* When modal is open */
+.modal.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+}
+
+.modal-header .close {
+    cursor: pointer;
+    font-size: 24px;
+}
+
+/* Form for event planning */
+.modal-content input, .modal-content select, .modal-content textarea {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Highlighting the current day and event days */
+.calendar-date.today {
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+}
+
+.calendar-date.event-day {
+    border: 2px solid red;
+    border-radius: 50%;
+    color: red;
+}

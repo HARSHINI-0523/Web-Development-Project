@@ -1,0 +1,65 @@
+/* src/components/dashboard/EditProfile.css */
+
+.edit-profile-container {
+    background-color: #fff;
+    padding:20px;
+    
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 0 auto;
+    width:800px;
+}
+
+.edit-profile-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.profile-photo-preview {
+    margin-top: 10px;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.error-message {
+    color: red;
+}
+
+.success-message {
+    color: green;
+}
+
+.save-button {
+    padding: 10px 15px;
+    background-color: #2ecc71;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    align-self: flex-start;
+}
+
+.save-button:hover {
+    background-color: #27ae60;
+}

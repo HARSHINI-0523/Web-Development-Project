@@ -1,0 +1,41 @@
+.create-container {
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.file-select-button {
+    background-color: #1d4ed8; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.file-select-button:hover {
+    background-color: #2563eb; 
+}
+
+.submit-button {
+    background-color: #22c55e; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #16a34a; 
+}
+
+input[type='file'] {
+    display: none; 
+}

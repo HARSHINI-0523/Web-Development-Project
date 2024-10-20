@@ -1,0 +1,9 @@
+body {
+  background-color: white;
+  color: black;
+  font-family: 'Inter', sans-serif;
+}
+
+.container {
+  padding-top: 60px; 
+}
