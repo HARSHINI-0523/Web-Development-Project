@@ -1,4 +1,4 @@
-.network-container {
+.event-container {
     padding: 20px;
 }
 
@@ -104,18 +104,24 @@
     margin: 5px 0 0;
 }
 
-.network-header {
+.event-header {
     display: flex;
-    justify-content: space-between; /* Ensure Network and search bar align side-by-side */
+    justify-content: space-between; /* Ensure event and search bar align side-by-side */
     align-items: center;
     margin-bottom: 20px;
     padding: 10px 0;
 }
 
-.network-header h2 {
+.event-header h2 {
     margin: 0; /* Removes extra margin around the heading */
     flex: 1; /* Allow the heading to take up available space */
 }
+
+.selected-date {
+    background-color: red;
+    color: white;
+}
+
 
 .search-form {
     display: flex;
@@ -167,7 +173,7 @@
 /* Modal */
 /* Modal - Ensure visibility when open */
 .modal {
-    display: flex; /* Default is hidden, but this will change via JS */
+    display:flex; /* Default is hidden, but this will change via JS */
     position: fixed;
     top: 0;
     left: 0;
@@ -177,7 +183,7 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    visibility: hidden; /* Initially hidden */
+    visibility: hidden;  
     opacity: 0;
     transition: visibility 0s, opacity 0.3s;
 }

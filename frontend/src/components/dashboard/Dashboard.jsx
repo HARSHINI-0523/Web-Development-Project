@@ -45,13 +45,12 @@ function Dashboard() {
                     <Link to="/dashboard/create" className="sidebar-link">
                         <FaPlus /> Create
                     </Link>
-                    <Link to="/dashboard/network" className="sidebar-link">
-                        <FaNetworkWired /> Network
+                    <Link to="/dashboard/events" className="sidebar-link">
+                        <FaNetworkWired /> Events
                     </Link>
                     <Link to="/dashboard/resources" className="sidebar-link">
                         <FaBook /> Resources
                     </Link>
-                    {/* <Link to="file:///C:/Users/jyoth/Downloads/index.html">Resources</Link> */}
                     <Link to="/dashboard/profile" className="sidebar-link">
                         <FaUser /> Profile
                     </Link>

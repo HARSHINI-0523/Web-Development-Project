@@ -11,7 +11,7 @@ import Profile from "./components/dashboard/Profile";
 import Search from "./components/dashboard/Search";
 import ArtShowcase from "./components/dashboard/ArtShowcase";
 import Create from "./components/dashboard/Create";
-import Network from "./components/dashboard/Network";
+import Event from "./components/dashboard/Event";
 import Resources from "./components/dashboard/Resources";
 import Settings from "./components/dashboard/Settings";
 import EditProfile from "./components/dashboard/EditProfile";
@@ -48,7 +48,7 @@ function App() {
           <Route path="profile" element={<Profile />} />
           <Route path="art-showcase" element={<ArtShowcase />} />
           <Route path="create" element={<Create />} />
-          <Route path="network" element={<Network />} />
+          <Route path="events" element={<Event />} />
           <Route path="resources" element={<Resources />} />
           <Route path="settings" element={<Settings />} />
           <Route path="edit-profile" element={<EditProfile />} />

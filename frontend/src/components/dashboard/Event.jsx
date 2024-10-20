@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import './Network.css'; // Import the CSS styles
+import './Event.css'; // Import the CSS styles
 
-function Network() {
+function Event() {
     const [currentMonth, setCurrentMonth] = useState(new Date(2024, 9)); // October 2024
     const [selectedDate, setSelectedDate] = useState(null);
     const [searchDate, setSearchDate] = useState('');
     const [events, setEvents] = useState({});
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(true);
     const [formData, setFormData] = useState({
         eventName: '',
         organizer: '',
@@ -54,8 +54,8 @@ function Network() {
     };
 
     const openModal = () => {
-        console.log('Plus button clicked');
         setIsModalOpen(true);
+        console.log("Plus")
     };
 
     const closeModal = () => {
@@ -98,9 +98,9 @@ function Network() {
     ];
 
     return (
-        <div className="network-container">
-            <div className="network-header">
-                <h2>Network</h2>
+        <div className="event-container">
+            <div className="event-header">
+                <h2>Events</h2>
                 <form onSubmit={handleSearchSubmit} className="search-form">
                     <input 
                         type="text" 
@@ -111,7 +111,9 @@ function Network() {
                     />
                     <button type="submit">Search</button>
                     <div className="plus-button" onClick={openModal}>+</div>
+                    
                 </form>
+           
             </div>
 
             <div className="calendar-container">
@@ -134,12 +136,13 @@ function Network() {
                             const day = i + 1;
                             const dateStr = `${currentMonth.getFullYear()}-${String(currentMonth.getMonth() + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
                             const isToday = dateStr === today.toISOString().split('T')[0];
-                            const isEventDay = events[dateStr];
+                            const isEventDay =  events[dateStr] 
+
 
                             return (
                                 <div
                                     key={day}
-                                    className={`calendar-date ${isToday ? 'today' : ''} ${isEventDay ? 'event-day' : ''}`}
+                                    className={`calendar-date ${isToday ? 'today' : ''}${isEventDay ? 'event-day' : ''}`}
                                     onClick={() => handleDateClick(day)}
                                 >
                                     {day}
@@ -150,7 +153,7 @@ function Network() {
                 </div>
 
                 <div className="event-section">
-                    <h3>Events for {selectedDate || 'Select a date'}</h3>
+                    <h3>Events for {selectedDate || today.toISOString().split('T')[0]}</h3>
                     {selectedDate && events[selectedDate] ? (
                         <div>
                             <h4>{events[selectedDate].eventName}</h4>
@@ -166,11 +169,13 @@ function Network() {
             </div>
 
             {isModalOpen && (
-                <div className="modal">
+                <div className={`modal ${isModalOpen ? 'show' : ''}`}>
                     <div className="modal-content">
+                        <h3>Modal is Open!</h3>
+                        <h3>{isModalOpen}</h3>
                         <div className="modal-header">
                             <h3>Plan Event</h3>
-                            <span className="close" onClick={closeModal}>&times;</span>
+                            <span className="close" onClick={closeModal}>Close</span>   {/*&times;*/}
                         </div>
                         <form onSubmit={handleFormSubmit}>
                             <input 
@@ -224,4 +229,4 @@ function Network() {
     );
 }
 
-export default Network;
+export default Event;
