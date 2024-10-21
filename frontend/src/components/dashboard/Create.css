@@ -1,41 +1,205 @@
+/* Container Styling */
 .create-container {
-    margin: 0 auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
     padding: 20px;
-    background-color: #f9f9f9;
+    border-radius: 8px;
+    z-index: 1001;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+    max-height: 80vh; /* Max height for scrolling */
+    overflow-y: auto; /* Allow vertical scrolling */
 }
 
-.file-select-button {
-    background-color: #1d4ed8; 
+/* Hide scrollbar */
+.create-container::-webkit-scrollbar {
+    display: none; /* For WebKit browsers (Chrome, Safari) */
+}
+
+.create-container {
+    scrollbar-width: none; /* For Firefox */
+}
+
+/* Overlay Styling */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+/* Welcome GIF Styling */
+.welcome-gif {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    margin: 10px auto;
+    display: block;
+    border-radius: 10px;
+}
+
+/* Category Selection */
+.select-button {
+    padding: 10px;
+    background-color: #007bff;
     color: white;
     border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-left: 90px;
+}
+
+.select-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* Category Options Styling */
+.category-options {
+    border: 1px solid #ccc;
+    background-color: white;
+    border-radius: 5px;
+    position: absolute;
+    width: auto; /* Adjust to fit content */
+    z-index: 20;
+    display: flex; /* Use flex to fit around content */
+    flex-direction: column; /* Stack items vertically */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-left: 105px;
+}
+
+/* Category Option Styling */
+.category-option {
+    padding: 10px 15px; /* Increase padding for better click area */
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+    margin: 2px 0; /* Space between options */
+    border-radius: 5px; /* Rounded corners */
+}
+
+.category-option:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.02); /* Slightly enlarge on hover */
+}
+
+/* File Upload Styling */
+.file-upload {
+    margin: 50px 100px;
+}
+
+.file-upload-button {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.3s;
+  
+}
+
+.file-upload-button:hover {
+    background-color: #218838;
+}
+
+.file-upload-button input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Selected Image Preview */
+.selected-image {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* Button Group Styling */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.submit-button,
+.cancel-button {
     padding: 10px 20px;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    margin-top: 10px;
-    transition: background-color 0.3s ease;
-}
-
-.file-select-button:hover {
-    background-color: #2563eb; 
+    transition: background-color 0.3s;
 }
 
 .submit-button {
-    background-color: #22c55e; 
+    background-color: #007bff;
     color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 20px;
-    transition: background-color 0.3s ease;
 }
 
 .submit-button:hover {
-    background-color: #16a34a; 
+    background-color: #0056b3;
 }
 
-input[type='file'] {
-    display: none; 
+.cancel-button {
+    background-color: #dc3545;
+    color: white;
+}
+
+.cancel-button:hover {
+    background-color: #c82333;
+}
+
+/* Title Input Styling */
+.create-form input[type="text"] {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.create-form input[type="text"]:focus {
+    border-color: #007bff;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+    outline: none;
+}
+
+/* Description Textarea Styling */
+.create-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 100px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.create-form textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+    outline: none;
 }

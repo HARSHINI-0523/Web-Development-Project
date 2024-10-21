@@ -205,7 +205,7 @@ function Event() {
                                 name="cost" 
                                 value={formData.cost} 
                                 onChange={handleFormChange} 
-                                placeholder="Cost (e.g., Free or $20)" 
+                                placeholder="Cost (e.g., Free or Rs.s20)" 
                             />
                             <textarea 
                                 name="activities" 

@@ -39,25 +39,36 @@
     padding: 20px 0;
 }
 
+/* Common styling for both links and buttons inside the sidebar */
 .sidebar-link {
     display: flex;
     align-items: center;
-    padding: 12px 20px;
-    color: #ecf0f1;
+    padding: 10px 20px;
     text-decoration: none;
+    color: #fff;  /* Adjust this to the desired text color */
     font-size: 16px;
-    transition: background 0.3s, color 0.3s;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
 }
 
+/* Hover effect for links and button */
 .sidebar-link:hover {
-    background-color: #34495e;
-    color: #fff;
+    background-color: rgba(255, 255, 255, 0.1);  /* Light hover effect */
 }
 
+/* Ensure button doesn't appear different */
+.sidebar-link:focus {
+    outline: none;
+}
+
+/* Additional styling to prevent shift on hover */
 .sidebar-link svg {
     margin-right: 10px;
-    font-size: 18px;
 }
+
 
 .sidebar-more {
     padding: 20px 0;

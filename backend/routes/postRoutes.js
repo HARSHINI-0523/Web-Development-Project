@@ -6,18 +6,20 @@ const upload = require('../middleware/upload');
 
 router.post('/', auth.protect, upload.single('image'), async (req, res) => {
     try {
-        const { caption } = req.body;
-
+        const { title,description,category } = req.body;
+        
         if (!req.file) {
             return res.status(400).json({ msg: 'No file uploaded' });
         }
 
-        if (!caption) {
-            return res.status(400).json({ msg: 'Caption is required' });
+        if (!title) {
+            return res.status(400).json({ msg: 'Title is required' });
         }
 
         const newPost = new Post({
-            caption,
+            title,
+            description,
+            category,
             imageUrl: req.file.filename,
             user: req.user.id,
         });

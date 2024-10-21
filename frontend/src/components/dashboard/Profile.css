@@ -86,6 +86,7 @@
 
 .posts-container{
     display: flex;
+    max-width:1000px;
 }
 .post-card{
    

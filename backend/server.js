@@ -9,7 +9,7 @@ dotenv.config();
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const searchUserRoutes = require('./routes/searchUser');
-const postRoutes = require('./routes/postRoutes'); // Make sure to import your post routes
+const postRoutes = require('./routes/postRoutes'); 
 const repostRoutes = require('./routes/repostRoutes');
 const app = express();
 
@@ -24,7 +24,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/searchUser', searchUserRoutes);
-app.use('/api/posts', postRoutes); // Ensure this line is added
+app.use('/api/posts', postRoutes); 
 app.use('/api/reposts', repostRoutes);
 // Connect to MongoDB
 mongoose

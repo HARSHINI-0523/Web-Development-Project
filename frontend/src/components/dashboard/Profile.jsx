@@ -113,7 +113,7 @@ function Profile() {
                                 <img src={`http://localhost:5000/uploads/${encodeURIComponent(post.imageUrl)}`} alt="Post" className="post-image" />
 
                                 <div className='post-details'>
-                                    <p>{post.caption}</p>
+                                    <p>{post.title}</p>
                                     {/* <p>Posted on: {new Date(post.createdAt).toLocaleString()}</p> */}
                                 </div>
                             </div>
