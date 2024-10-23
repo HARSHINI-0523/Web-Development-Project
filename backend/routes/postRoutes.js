@@ -8,7 +8,7 @@ const upload = require('../middleware/upload');
 router.post('/:postId/comment', auth.protect, async (req, res) => {
     const { postId } = req.params;
     const { comment } = req.body;
-    
+
     try {
         const post = await Post.findById(postId);
         if (!post) return res.status(404).json({ message: 'Post not found' });
@@ -65,10 +65,10 @@ router.patch('/:postId/like', auth.protect, async (req, res) => {
 });
 
 // Unlike a post
-router.patch('/:postId/unlike', auth.protect , async (req, res) => {
+router.patch('/:postId/unlike', auth.protect, async (req, res) => {
     try {
         const post = await Post.findById(req.params.postId);
-        
+
         // Check if the user has already liked the post
         if (post.likedBy.includes(req.user._id)) {
             // Remove the user's ID from the likedBy array
@@ -84,10 +84,11 @@ router.patch('/:postId/unlike', auth.protect , async (req, res) => {
 });
 
 
+//Upload a post
 router.post('/', auth.protect, upload.single('image'), async (req, res) => {
     try {
-        const { title,description,category } = req.body;
-        
+        const { title, description, category } = req.body;
+
         if (!req.file) {
             return res.status(400).json({ msg: 'No file uploaded' });
         }
@@ -112,15 +113,31 @@ router.post('/', auth.protect, upload.single('image'), async (req, res) => {
     }
 });
 
-router.get('/user', auth.protect,async (req, res) => {
+//Get a post of a user
+router.get('/user', auth.protect, async (req, res) => {
     try {
-        
-      const posts = await Post.find({ user: req.user.id });
-      res.json(posts);
+
+        const posts = await Post.find({ user: req.user.id });
+        res.json(posts);
     } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server error');
+        console.error(err.message);
+        res.status(500).send('Server error');
     }
-  });
-  
+});
+
+//get all posts
+router.get('/', auth.protect, async (req, res) => {
+    try {
+        const posts = await Post.find()
+        .populate('user', 'username') // This populates the user field with only the username
+            .exec();
+
+
+        res.json(posts);
+    }
+    catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
+})
 module.exports = router;

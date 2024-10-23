@@ -325,7 +325,7 @@ function Profile() {
                             <FaRegCommentAlt className='fs-4' />
                         </button>
                         <button
-                            onClick={() => handleRepost(post._id)} className='modalBtn'
+                            onClick={() => handleRepost(selectedPost._id)} className='modalBtn'
                             style={{ padding: 0, margin: 0 }}>
                             <BiRepost className='fs-2' />
                         </button>
@@ -350,7 +350,6 @@ function Profile() {
                                 <div key={comment._id} className="comment-item">
                                     <p>{comment.comment}</p>
                                     <p><strong>By:</strong> {comment.madeBy ? comment.madeBy.username : 'Unknown User'}</p>
-                                    <p><strong>On:</strong> {new Date(comment.createdAt).toLocaleString()}</p>
                                 </div>
                             ))
                         ) : (

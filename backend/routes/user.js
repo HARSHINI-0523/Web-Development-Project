@@ -8,6 +8,7 @@ const User = require('../models/User');
 // @access  Private
 router.get('/profile', protect, async (req, res) => {
     try {
+        console.log(req.user);
         res.json(req.user);
     } catch (error) {
         console.error('Get Profile Error:', error);

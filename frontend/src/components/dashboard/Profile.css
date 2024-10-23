@@ -163,7 +163,7 @@
 /* Modal Post Image */
 .modal-post-image {
     width: 100%;
-    height: auto;
+    height: 500px;
     border-radius: 5px;
     margin-bottom: 20px;
 }
