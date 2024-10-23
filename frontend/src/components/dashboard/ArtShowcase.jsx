@@ -181,7 +181,7 @@ function ArtShowcase() {
 
                 return (
                     <div key={post._id} className="post-card">
-                         <div className="post-user-info p-3">
+                         <div className="post-user-info p-3 text-center">
                             <h5>Posted by: {post.user ? post.user.username : 'Unknown User'}</h5>
                         </div>
                         <img
