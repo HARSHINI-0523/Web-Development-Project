@@ -126,11 +126,21 @@ router.get('/user', auth.protect, async (req, res) => {
 });
 
 //get all posts
-router.get('/', auth.protect, async (req, res) => {
+router.get('/:state?', auth.protect, async (req, res) => {
     try {
-        const posts = await Post.find()
+        const {state}= req.params;
+        let posts;
+        if(state == 'null' || !state){
+         posts = await Post.find()
         .populate('user', 'username') // This populates the user field with only the username
             .exec();
+        
+        }
+        else{
+             posts = await Post.find({category:state})
+            .populate('user', 'username') // This populates the user field with only the username
+            .exec();
+        }
 
 
         res.json(posts);

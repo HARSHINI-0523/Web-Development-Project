@@ -70,10 +70,11 @@ function SignUp() {
         <div className="signup-container">
             <div className="signup-box">
                 <div className="signup-image">
-                    <img
+                    {/* <img
                         src="https://i0.wp.com/picjumbo.com/wp-content/uploads/free-abstract-website-background-free-photo.jpg?w=2210&quality=70"
                         alt="Sign Up"
-                    />
+                    /> */}
+                    <video src="https://www.canva.com/design/DAGUedCqdVs/C6KcvTJiDStfKjYz2Dld2g/watch?utm_content=DAGUedCqdVs&utm_campaign=designshare&utm_medium=link&utm_source=editor"/>
                 </div>
                 <div className="signup-form">
                     <h2>Sign Up</h2>

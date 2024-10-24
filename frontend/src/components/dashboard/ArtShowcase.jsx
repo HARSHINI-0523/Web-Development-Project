@@ -1,5 +1,6 @@
 // src/components/dashboard/ArtShowcase.jsx
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import API from '../../api/axios';
 import {useEffect,useState} from 'react';
 import { FaRegCommentAlt } from "react-icons/fa";
@@ -11,6 +12,8 @@ import Modal from 'react-modal';
 Modal.setAppElement('#root');
 
 function ArtShowcase() {
+
+    let {state}=useLocation();
     const [userProfile, setUserProfile] = useState({
         username: '',
         email: '',
@@ -20,7 +23,7 @@ function ArtShowcase() {
         photo: '',
     });
     const [posts, setPosts] = useState([]);
-    const [reposts, setReposts] = useState([]);
+    
     const [comments, setComments] = useState([]); // Store comments for the selected post
     const [newComment, setNewComment] = useState(''); // For user input
     const [error, setError] = useState('');
@@ -42,9 +45,7 @@ function ArtShowcase() {
                 },
             });
             setUserProfile(response.data);
-            console.log("Response",response);
-            console.log("USer profile",userProfile);
-            console.log("USerProfile id",userProfile._id);
+            
             fetchPosts();
         } catch (err) {
             console.error('Fetch Profile Error:', err);
@@ -55,7 +56,7 @@ function ArtShowcase() {
         try {
             
             const token = localStorage.getItem('token');
-            const res = await API.get('/posts', {
+            const res = await API.get(`/posts/${state}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -69,11 +70,11 @@ function ArtShowcase() {
     //Handle likes
     const handleLike = async (postId, isLiked) => {
         const token = localStorage.getItem('token');
-        console.log("TOken",token);
+        
         try {
             if (isLiked) {
                 // Unlike the post (remove userId from likedBy)
-                console.log("POstId",postId);
+                
                 await API.patch(`/posts/${postId}/unlike`, {}, {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -81,7 +82,7 @@ function ArtShowcase() {
                 });
             } else {
                 // Like the post (add userId to likedBy)
-                console.log("POstId",postId);
+                
                 await API.patch(`/posts/${postId}/like`, {}, {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -307,6 +308,7 @@ function ArtShowcase() {
             })
         ) : (
             <p>No posts available.</p>
+            
         )}
     </div>
 

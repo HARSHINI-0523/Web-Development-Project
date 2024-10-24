@@ -142,7 +142,8 @@
 
 .dashboard-content {
     flex: 1;
-    margin-left: 250px; 
+    margin-left: 250px;  
+    width:980px;
     padding: 20px;
     background-color: #ecf0f1;
     overflow-y: auto;

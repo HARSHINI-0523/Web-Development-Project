@@ -3,7 +3,9 @@
   text-align: center;
   background-color: #f5f7fa; 
 }
-
+.text-justify{
+  text-align: justify;
+}
 .services-title {
   font-size: 1.5rem;
   color: #8bc34a;

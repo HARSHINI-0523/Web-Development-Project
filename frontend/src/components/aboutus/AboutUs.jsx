@@ -9,12 +9,10 @@ function AboutUs() {
       <div className="about-us-content">
         
         <h2 color='white'>About</h2>
-        <p className="about-description">
+        <p className="about-description text-justify">
         ArtMaison is a vibrant community designed specifically for artists and art enthusiasts. This innovative platform empowers artists to showcase their masterpieces, share their creative vision, and connect with like-minded individuals. By providing a digital space for artists to share their work, ArtMaison allows them to gain exposure, receive feedback, and build a community around their art. This not only helps artists to grow their audience but also enables them to stay motivated and inspired to continue creating.
         </p>
-        <p className="about-description">
-          
-        </p>
+       
       </div>
       <div className="about-us-carousel">
         <Carousel interval={2000} controls={false} indicators={false} fade>

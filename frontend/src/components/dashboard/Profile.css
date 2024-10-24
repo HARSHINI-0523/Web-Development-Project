@@ -1,8 +1,10 @@
+
+
 .profile-container {
     display: flex; 
-    flex-direction: column; 
+    flex-direction: column;  
     width: 100%; 
-    max-width: 900px; 
+     
     margin: 0 auto; 
     padding: 20px;
     min-height: 100vh;
@@ -81,15 +83,16 @@
 .posts-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around; /* Changed to space-between to distribute posts evenly */
-    max-width: 1000px;
-    margin: 0 auto;
+    justify-content: space-between; /* Changed to space-between to distribute posts evenly */
+    max-width: 100%;
+    margin: 0 0;
     padding: 20px 0;
 }
 
 .post-card {
-    width: 30%; /* Ensures three posts per row while maintaining the same width */
-    margin-bottom: 20px; /* Reduced margin for tighter layout */
+    width: 30%; 
+    margin-bottom:20px;
+    margin-right:5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     overflow: hidden;
