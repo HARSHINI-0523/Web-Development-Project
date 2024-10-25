@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import API from "../../api/axios"; 
+import API from "../../api/axios";
 import "./SignUp.css";
+import Lottie from "react-lottie";
+import SignupAnimation from "../../assets/Animations/SignupAnimation.json"; // Ensure path is correct
 
 function SignUp() {
     const navigate = useNavigate();
@@ -43,14 +45,22 @@ function SignUp() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    async function handleSubmit(e){
+    const defaultOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: SignupAnimation,
+        rendererSettings: {
+          preserveAspectRatio: "xMidYMid slice"
+        }
+      };
+    async function handleSubmit(e) {
         e.preventDefault();
         setSignUpError(""); 
         if (validate()) {
             try {
                 let response = await API.post('/auth/signup', formData);
                 localStorage.setItem('token', response.data.token);
-                console.lof(formData)
+                console.log(formData); // Fixed typo
                 navigate('/login'); 
             } catch (error) {
                 if (error.response) {
@@ -70,11 +80,12 @@ function SignUp() {
         <div className="signup-container">
             <div className="signup-box">
                 <div className="signup-image">
-                    {/* <img
-                        src="https://i0.wp.com/picjumbo.com/wp-content/uploads/free-abstract-website-background-free-photo.jpg?w=2210&quality=70"
-                        alt="Sign Up"
-                    /> */}
-                    <video src="https://www.canva.com/design/DAGUedCqdVs/C6KcvTJiDStfKjYz2Dld2g/watch?utm_content=DAGUedCqdVs&utm_campaign=designshare&utm_medium=link&utm_source=editor"/>
+                    {/* Display the Lottie animation */}
+                    <Lottie 
+                        options={defaultOptions}
+                        height={550}
+                        width={500}
+                    />
                 </div>
                 <div className="signup-form">
                     <h2>Sign Up</h2>

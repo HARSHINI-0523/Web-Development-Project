@@ -17,7 +17,7 @@ import Settings from "./components/dashboard/Settings";
 import EditProfile from "./components/dashboard/EditProfile";
 import Activity from "./components/dashboard/Activity"; 
 import PrivateRoute from "./components/PrivateRoute"; 
-
+import ProfilesSearched from "./components/dashboard/ProfilesSearched";
 const PublicLayout = () => (
     <>
         <Outlet />
@@ -54,6 +54,7 @@ function App() {
           <Route path="edit-profile" element={<EditProfile />} />
           <Route path="activity" element={<Activity />} />
           <Route path="search" element={<Search />} />
+          <Route path="profiles-searched" element={<ProfilesSearched />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" />} />

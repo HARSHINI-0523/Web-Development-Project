@@ -6,6 +6,7 @@ import { BiRepost } from "react-icons/bi";
 import { PiHandHeartFill } from "react-icons/pi";
 import { PiHandHeartLight } from "react-icons/pi";
 import Modal from 'react-modal';
+import { useLocation } from 'react-router-dom';
 
 Modal.setAppElement('#root');
 
@@ -27,16 +28,28 @@ function Profile() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [commentsModalIsOpen, setCommentsModalIsOpen] = useState(false); // New modal state for comments
     const [selectedPost, setSelectedPost] = useState(null); // For storing selected post details
-
+    let { state } = useLocation();
+    console.log(state);
     useEffect(() => {
         const fetchProfile = async () => {
             try {
+                let response;
                 const token = localStorage.getItem('token'); // Get JWT token
-                const response = await API.get('/user/profile', {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+                if (state == null) {
+                     
+                    response = await API.get('/user/profile', {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+                }
+                else{
+                    response = await API.get(`/user/profile/${state._id}`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+                }
                 setUserProfile(response.data);
                 fetchPosts();
                 fetchReposts();
@@ -51,12 +64,23 @@ function Profile() {
 
     const fetchPosts = async () => {
         try {
+            let response;
             const token = localStorage.getItem('token');
-            const response = await API.get('/posts/user', {
+            if(state==null){
+            response = await API.get('/posts/user', {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
+        }
+        else{
+            response = await API.get(`/posts/user/${state._id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                    },
+                    });
+
+        }
             setPosts(response.data);
         } catch (err) {
             console.error('Fetch Posts Error:', err);
@@ -119,8 +143,8 @@ function Profile() {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            
-    
+
+
             // Fetch reposts again to reflect the new reposted post
             fetchReposts();
         } catch (err) {
@@ -195,10 +219,8 @@ function Profile() {
                 </div>
                 <div className="profile-info-container">
                     <h2>{userProfile.username}</h2>
-                    <p><strong>Email:</strong> {userProfile.email}</p>
-                    <p><strong>Bio:</strong> {userProfile.bio}</p>
-                    <p><strong>City:</strong> {userProfile.city}</p>
-                    <p><strong>Country:</strong> {userProfile.country}</p>
+                    <h6> {userProfile.bio}</h6>
+                    <p><strong>Contact:</strong> {userProfile.email}</p>
                 </div>
             </div>
 
@@ -278,9 +300,10 @@ function Profile() {
                     {reposts.length > 0 ? (
                         reposts.map((repost) => (
                             <div key={repost._id} className="post-card">
-                                <img src={`/${repost.image}`} alt="Repost" className="post-image" />
+                                <img src={`http://localhost:5000/uploads/${encodeURIComponent(repost.imageUrl)}`}
+                                 alt="Repost" className="repost-image" />
                                 <p>{repost.caption}</p>
-                                <p>Reposted on: {new Date(repost.createdAt).toLocaleString()}</p>
+                                
                             </div>
                         ))
                     ) : (
@@ -371,7 +394,7 @@ function Profile() {
                 </Modal>
             )}
         </div>
-        
+
     );
 }
 

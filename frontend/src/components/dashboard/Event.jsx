@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import './Event.css'; // Import the CSS styles
+import React, { useState, useEffect, useRef } from 'react';
+import './Event.css';
 
 function Event() {
     const [currentMonth, setCurrentMonth] = useState(new Date(2024, 9)); // October 2024
     const [selectedDate, setSelectedDate] = useState(null);
     const [searchDate, setSearchDate] = useState('');
     const [events, setEvents] = useState({});
-    const [isModalOpen, setIsModalOpen] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false); // Start with modal closed
     const [formData, setFormData] = useState({
         eventName: '',
         organizer: '',
@@ -16,7 +16,23 @@ function Event() {
         date: '',
     });
 
-    // Get the current day
+    const modalRef = useRef(null); // Ref to track modal clicks
+
+    useEffect(() => {
+        // Handle click outside the modal to close it
+        const handleClickOutside = (event) => {
+            if (modalRef.current && !modalRef.current.contains(event.target)) {
+                setIsModalOpen(false);
+            }
+        };
+        if (isModalOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isModalOpen]);
+
     const today = new Date();
 
     const getDaysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
@@ -53,13 +69,12 @@ function Event() {
         }
     };
 
-    const openModal = () => {
-        setIsModalOpen(true);
-        console.log("Plus")
-    };
-
     const closeModal = () => {
         setIsModalOpen(false);
+    };
+
+    const openModal = () => {
+        setIsModalOpen(true);
     };
 
     const handleFormChange = (e) => {
@@ -92,11 +107,6 @@ function Event() {
 
     const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-    const upcomingEvents = [
-        { date: '2024-10-30', title: 'Halloween Party', description: 'Join us for spooky fun!' },
-        { date: '2024-11-25', title: 'Thanksgiving Feast', description: 'Celebrate with a feast.' },
-    ];
-
     return (
         <div className="event-container">
             <div className="event-header">
@@ -110,10 +120,12 @@ function Event() {
                         required 
                     />
                     <button type="submit">Search</button>
-                    <div className="plus-button" onClick={openModal}>+</div>
-                    
+
+                    {/* Plus icon for opening the modal */}
+                    <div className="plus-button" onClick={openModal}>
+                        <span>+</span>
+                    </div>
                 </form>
-           
             </div>
 
             <div className="calendar-container">
@@ -136,8 +148,7 @@ function Event() {
                             const day = i + 1;
                             const dateStr = `${currentMonth.getFullYear()}-${String(currentMonth.getMonth() + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
                             const isToday = dateStr === today.toISOString().split('T')[0];
-                            const isEventDay =  events[dateStr] 
-
+                            const isEventDay =  events[dateStr];
 
                             return (
                                 <div
@@ -170,12 +181,10 @@ function Event() {
 
             {isModalOpen && (
                 <div className={`modal ${isModalOpen ? 'show' : ''}`}>
-                    <div className="modal-content">
-                        <h3>Modal is Open!</h3>
-                        <h3>{isModalOpen}</h3>
+                    <div className="modal-content" ref={modalRef}>
+                        <h3>Add New Event</h3>
                         <div className="modal-header">
-                            <h3>Plan Event</h3>
-                            <span className="close" onClick={closeModal}>Close</span>   {/*&times;*/}
+                            <button className="close" onClick={closeModal}>✖</button>
                         </div>
                         <form onSubmit={handleFormSubmit}>
                             <input 
@@ -191,27 +200,21 @@ function Event() {
                                 name="organizer" 
                                 value={formData.organizer} 
                                 onChange={handleFormChange} 
-                                placeholder="Organizer" 
+                                placeholder="Who is Conducting" 
                             />
                             <input 
                                 type="text" 
                                 name="location" 
                                 value={formData.location} 
                                 onChange={handleFormChange} 
-                                placeholder="Location" 
+                                placeholder="Where it is Conducting" 
                             />
                             <input 
                                 type="text" 
                                 name="cost" 
                                 value={formData.cost} 
                                 onChange={handleFormChange} 
-                                placeholder="Cost (e.g., Free or Rs.s20)" 
-                            />
-                            <textarea 
-                                name="activities" 
-                                value={formData.activities} 
-                                onChange={handleFormChange} 
-                                placeholder="Activities" 
+                                placeholder="Free or Cost Paying" 
                             />
                             <input 
                                 type="date" 
@@ -219,6 +222,12 @@ function Event() {
                                 value={formData.date} 
                                 onChange={handleFormChange} 
                                 required 
+                            />
+                            <textarea 
+                                name="activities" 
+                                value={formData.activities} 
+                                onChange={handleFormChange} 
+                                placeholder="Activities Conducted on that Workshop" 
                             />
                             <button type="submit">Save Event</button>
                         </form>

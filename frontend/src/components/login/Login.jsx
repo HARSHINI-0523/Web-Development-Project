@@ -74,7 +74,7 @@ function Login() {
     <div className="login-container">
         <div className="login-image">
           <img
-            src="https://i0.wp.com/picjumbo.com/wp-content/uploads/free-abstract-website-background-free-photo.jpg?w=2210&quality=70"
+            src="https://github.com/AnjusriKandi/full_stack/blob/main/frontend/src/assets/ArtFusion%20photo.jpg?raw=true"
             alt="Login"
           />
         </div>

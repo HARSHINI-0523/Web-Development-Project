@@ -12,7 +12,7 @@ function Header() {
             {/* ARTFUSION Brand Link */}
             <h1 className="fs-2 text-white p-3 pr-5 head">
                 <Link to="/" className="header-brand">
-                    ARTFUSION
+                   ARTFUSION
                 </Link>
             </h1>
             <ul className="list list-inline-item pt-4 text-dangerous">

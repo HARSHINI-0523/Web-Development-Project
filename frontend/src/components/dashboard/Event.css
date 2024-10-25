@@ -1,23 +1,30 @@
+/* Container for event section */
 .event-container {
     padding: 20px;
+    font-family: Arial, sans-serif;
 }
 
+/* Flexbox to align the calendar and event details side by side */
 .calendar-container {
-    display: flex; /* Use flex to arrange calendar and events side by side */
+    display: flex;
+    justify-content: space-between; /* Spread calendar and events equally */
 }
 
+/* Calendar styling */
 .calendar {
-    margin-right: 20px; /* Space between calendar and events */
+    margin-right: 50px; /* Space between calendar and event details */
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 10px;
-    flex: 1; /* Allow the calendar to grow */
+    flex: 1; /* Calendar grows within the available space */
 }
 
+/* Header section for the calendar */
 .calendar-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
 }
 
 .calendar h3 {
@@ -25,6 +32,7 @@
     text-align: center;
 }
 
+/* Buttons to navigate months */
 .previous-month-button,
 .next-month-button {
     background: none;
@@ -33,23 +41,28 @@
     cursor: pointer;
 }
 
+/* Days of the week (Sun, Mon, etc.) */
 .days-of-week {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     font-weight: bold;
     margin-bottom: 5px;
+    text-align: center;
 }
 
+/* Style for individual days of the week */
 .day {
     text-align: center;
 }
 
+/* Grid structure for the calendar days */
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 5px;
 }
 
+/* Calendar day blocks */
 .calendar-date {
     text-align: center;
     padding: 10px;
@@ -58,21 +71,25 @@
     cursor: pointer;
 }
 
+/* Hover effect for calendar dates */
 .calendar-date:hover {
     background-color: #e7f3ff;
 }
 
+/* Empty days (before the 1st of the month starts) */
 .calendar-date.empty {
     background-color: transparent;
 }
 
+/* Event section */
 .event-section {
     background-color: #e7f3ff;
     padding: 15px;
     border-radius: 8px;
-    width: 300px; /* Fixed width for event section */
+    width: 500px; /* Fixed width for event details section */
 }
 
+/* Individual event styling */
 .event {
     margin-bottom: 10px;
 }
@@ -82,13 +99,14 @@
 }
 
 .event p {
-    margin: 5px 0 0;
+    margin: 5px 0;
 }
 
+/* Upcoming events section */
 .upcoming-events {
-    margin-top: 20px; /* Add margin above upcoming events section */
+    margin-top: 20px;
     padding: 15px;
-    background-color: #f0f8ff; /* Light blue background for upcoming events */
+    background-color: #f0f8ff; /* Light blue background */
     border-radius: 8px;
 }
 
@@ -101,20 +119,21 @@
 }
 
 .upcoming-event p {
-    margin: 5px 0 0;
+    margin: 5px 0;
 }
 
+/* Header for the event section */
 .event-header {
     display: flex;
-    justify-content: space-between; /* Ensure event and search bar align side-by-side */
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
     padding: 10px 0;
 }
 
 .event-header h2 {
-    margin: 0; /* Removes extra margin around the heading */
-    flex: 1; /* Allow the heading to take up available space */
+    margin: 0;
+    flex: 1;
 }
 
 .selected-date {
@@ -122,7 +141,7 @@
     color: white;
 }
 
-
+/* Search form */
 .search-form {
     display: flex;
     align-items: center;
@@ -149,7 +168,7 @@
     background-color: #0056b3;
 }
 
-/* Plus Button */
+/* Plus Button Styling */
 .plus-button {
     background-color: #007bff;
     color: white;
@@ -162,7 +181,7 @@
     cursor: pointer;
     font-size: 24px;
     margin-left: 10px;
-    position:relative;
+    position: relative;
     z-index: 10;
 }
 
@@ -170,54 +189,71 @@
     background-color: #0056b3;
 }
 
-/* Modal */
-/* Modal - Ensure visibility when open */
+/* Modal styles */
 .modal {
-    display:flex; /* Default is hidden, but this will change via JS */
+    display: none; /* Hidden by default */
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+    top: 50%;
+    left: 50%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Dim background */
-    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5); /* Background dimming */
+    padding: 100px;
     align-items: center;
     z-index: 1000;
-    visibility: hidden;  
     opacity: 0;
     transition: visibility 0s, opacity 0.3s;
 }
 
-/* When modal is open */
+/* Show the modal when open */
 .modal.show {
+    display: flex;
     visibility: visible;
     opacity: 1;
 }
 
+/* Modal content area */
 .modal-content {
     background-color: white;
-    padding: 20px;
+    padding: 15px;
     border-radius: 8px;
-    width: 400px;
+    width: 300px; /* Smaller box */
+    position: relative;
 }
 
+/* Modal header (title and close button) */
 .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative; /* Make this relative to position child elements */
+    padding: 10px 0;
 }
 
 .modal-header h3 {
     margin: 0;
+    flex: 1; /* Allow title to take available space */
 }
 
-.modal-header .close {
+/* Cross button for closing modal */
+.modal-header button.close {
+    position: absolute; 
+    right: -20px; /* Distance from right */
     cursor: pointer;
     font-size: 24px;
+    background: none;
+    border: none;
+    color: #333;
+    margin-top: -70px;
 }
 
-/* Form for event planning */
-.modal-content input, .modal-content select, .modal-content textarea {
+.modal-header button.close:hover {
+    color: #f00;
+}
+
+/* Form inside the modal */
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
     display: block;
     width: 100%;
     padding: 8px;
@@ -226,13 +262,14 @@
     border: 1px solid #ccc;
 }
 
-/* Highlighting the current day and event days */
+/* Highlight for the current day */
 .calendar-date.today {
     background-color: #007bff;
     color: white;
     border-radius: 50%;
 }
 
+/* Highlight for event days */
 .calendar-date.event-day {
     border: 2px solid red;
     border-radius: 50%;

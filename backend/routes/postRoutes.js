@@ -150,4 +150,20 @@ router.get('/:state?', auth.protect, async (req, res) => {
         res.status(500).send('Server error');
     }
 })
+
+// Get posts by a specific user ID
+router.get('/user/:userId', auth.protect, async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const posts = await Post.find({ user: userId })
+            .populate('user', 'username') // Populate with the username
+            .exec();
+
+        res.json(posts);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
+});
+
 module.exports = router;

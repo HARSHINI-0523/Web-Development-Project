@@ -15,6 +15,16 @@ router.get('/profile', protect, async (req, res) => {
     }
 });
 
+router.get('/profile/:userId', protect, async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId);
+        res.json(user);
+    } catch (error) {
+        console.error('Get Profile Error:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 // @route   PUT /api/user/profile
 // @desc    Update user profile
 // @access  Private
