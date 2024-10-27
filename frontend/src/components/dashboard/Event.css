@@ -89,6 +89,41 @@
     width: 500px; /* Fixed width for event details section */
 }
 
+
+/* Event date circle */
+.event-date-circle {
+    display:flex;
+    width: 50px; /* Adjusted width to fit the date (dd-mm) */
+    height: 50px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 20px; /* Space between date and event name */
+}
+.event-item{
+    display:flex;
+    margin:5px;
+}
+/* Event name beside the date circle */
+.event-name {
+    font-size: 16px;
+    color: #333;
+    padding:10px;
+    font-weight: bold;
+    
+}
+
+/* Additional styling if needed */
+.yearly-event-item:hover .event-details {
+    color: #0056b3; /* Optional hover effect for the event name */
+}
+
+
 /* Individual event styling */
 .event {
     margin-bottom: 10px;
@@ -134,11 +169,6 @@
 .event-header h2 {
     margin: 0;
     flex: 1;
-}
-
-.selected-date {
-    background-color: red;
-    color: white;
 }
 
 /* Search form */
@@ -262,16 +292,11 @@
     border: 1px solid #ccc;
 }
 
-/* Highlight for the current day */
-.calendar-date.today {
-    background-color: #007bff;
-    color: white;
-    border-radius: 50%;
+.yearly-events {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background: rgb(237, 235, 235);
+
 }
 
-/* Highlight for event days */
-.calendar-date.event-day {
-    border: 2px solid red;
-    border-radius: 50%;
-    color: red;
-}

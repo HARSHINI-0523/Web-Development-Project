@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Event.css';
+import API from '../../api/axios';
 
 function Event() {
     const [currentMonth, setCurrentMonth] = useState(new Date(2024, 9)); // October 2024
     const [selectedDate, setSelectedDate] = useState(null);
     const [searchDate, setSearchDate] = useState('');
     const [events, setEvents] = useState({});
-    const [isModalOpen, setIsModalOpen] = useState(false); // Start with modal closed
+    const [yearlyEvents, setYearlyEvents] = useState([]); // State for yearly events
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [formData, setFormData] = useState({
         eventName: '',
         organizer: '',
@@ -14,24 +16,43 @@ function Event() {
         cost: '',
         activities: '',
         date: '',
+        contactPhone: '',
     });
 
-    const modalRef = useRef(null); // Ref to track modal clicks
+    const modalRef = useRef(null);
 
     useEffect(() => {
-        // Handle click outside the modal to close it
-        const handleClickOutside = (event) => {
-            if (modalRef.current && !modalRef.current.contains(event.target)) {
-                setIsModalOpen(false);
-            }
-        };
-        if (isModalOpen) {
-            document.addEventListener('mousedown', handleClickOutside);
+    const fetchEvents = async () => {
+        try {
+            const res = await API.get(`/events/month/${currentMonth.getFullYear()}/${currentMonth.getMonth() + 1}`);
+            const data = res.data;
+            console.log(data); // Check the structure of fetched data
+
+            // Update the events state
+            const formattedEvents = data.reduce((acc, event) => {
+                const eventDate = new Date(event.date).toISOString().split('T')[0];
+                acc[eventDate] = event;
+                return acc;
+            }, {});
+
+            setEvents(formattedEvents);
+            
+            // Update the yearly events state as well
+            setYearlyEvents(data.map(event => ({
+                date: event.date,
+                eventName: event.eventName,
+                location: event.location,
+                // Add any other properties you need
+            })));
+
+        } catch (error) {
+            console.error('Error fetching events', error);
         }
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [isModalOpen]);
+    };
+
+    fetchEvents();
+}, [currentMonth]);
+
 
     const today = new Date();
 
@@ -41,6 +62,11 @@ function Event() {
     const handleDateClick = (day) => {
         const dateStr = `${currentMonth.getFullYear()}-${String(currentMonth.getMonth() + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         setSelectedDate(dateStr);
+    };
+
+    const handleYearlyEventClick = (eventDate) => {
+        const formattedDate = `${eventDate.getFullYear()}-${String(eventDate.getMonth() + 1).padStart(2, '0')}-${String(eventDate.getDate()).padStart(2, '0')}`;
+        setSelectedDate(formattedDate); // Set selected date to display event details
     };
 
     const handleNextMonth = () => {
@@ -82,29 +108,62 @@ function Event() {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
-        const { date, eventName, organizer, location, cost, activities } = formData;
+        const { date, eventName, organizer, location, cost, activities, contactPhone } = formData;
+        console.log(formData);
+        
         if (date && eventName) {
+          const token = localStorage.getItem('token');
+          try {
+            // Send event data to the backend using a POST request
+            const response = await API.post('/events', formData, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+      
+            // If the request is successful, proceed with the rest of the code
+            const newEvent = response.data; // Axios directly gives you the response data
+            console.log("newEvent", newEvent);
+      
+            // Update the events and yearlyEvents state with the new event
             setEvents((prev) => ({
-                ...prev,
-                [date]: {
-                    eventName,
-                    organizer,
-                    location,
-                    cost,
-                    activities,
-                },
+              ...prev,
+              [date]: newEvent,
             }));
+      
+            setYearlyEvents((prev) => [
+              ...prev,
+              { date: date, eventName: eventName, location: location },
+            ]);
+      
+            // Close the modal and reset the form data
             closeModal();
+            setFormData({
+              eventName: '',
+              organizer: '',
+              location: '',
+              cost: '',
+              activities: '',
+              date: '',
+              contactPhone: '',
+            });
+          } catch (error) {
+            // Handle the error response from the backend
+            console.error('Error submitting event:', error);
+            const errorMessage = error.response?.data?.message || 'Failed to add event. Please try again later.';
+            alert('Failed to add event: ' + errorMessage);
+          }
         } else {
-            alert('Please fill out the event name and date');
+          alert('Please fill out the event name and date.');
         }
-    };
+      };
+      
+      
 
     const daysInMonth = getDaysInMonth(currentMonth.getFullYear(), currentMonth.getMonth());
     const firstDay = getFirstDayOfMonth(currentMonth.getFullYear(), currentMonth.getMonth());
-
     const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
     return (
@@ -112,16 +171,14 @@ function Event() {
             <div className="event-header">
                 <h2>Events</h2>
                 <form onSubmit={handleSearchSubmit} className="search-form">
-                    <input 
-                        type="text" 
-                        value={searchDate} 
-                        onChange={handleSearchDateChange} 
-                        placeholder="dd-mm-yyyy" 
-                        required 
+                    <input
+                        type="text"
+                        value={searchDate}
+                        onChange={handleSearchDateChange}
+                        placeholder="dd-mm-yyyy"
+                        required
                     />
                     <button type="submit">Search</button>
-
-                    {/* Plus icon for opening the modal */}
                     <div className="plus-button" onClick={openModal}>
                         <span>+</span>
                     </div>
@@ -148,13 +205,14 @@ function Event() {
                             const day = i + 1;
                             const dateStr = `${currentMonth.getFullYear()}-${String(currentMonth.getMonth() + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
                             const isToday = dateStr === today.toISOString().split('T')[0];
-                            const isEventDay =  events[dateStr];
+                            const isEventDay = events[dateStr];
 
                             return (
                                 <div
                                     key={day}
                                     className={`calendar-date ${isToday ? 'today' : ''}${isEventDay ? 'event-day' : ''}`}
                                     onClick={() => handleDateClick(day)}
+                                    style={{ backgroundColor: isToday ? 'blue' : (isEventDay ? 'red' : 'initial' ) , color: isToday ? 'white' : 'initial'}} // Highlight in red if it's an event day
                                 >
                                     {day}
                                 </div>
@@ -172,6 +230,7 @@ function Event() {
                             <p>Location: {events[selectedDate].location}</p>
                             <p>Cost: {events[selectedDate].cost}</p>
                             <p>Activities: {events[selectedDate].activities}</p>
+                            <p>Contact: {events[selectedDate].contactPhone}</p>
                         </div>
                     ) : (
                         <p>No events found for this date.</p>
@@ -187,53 +246,82 @@ function Event() {
                             <button className="close" onClick={closeModal}>✖</button>
                         </div>
                         <form onSubmit={handleFormSubmit}>
-                            <input 
-                                type="text" 
-                                name="eventName" 
-                                value={formData.eventName} 
-                                onChange={handleFormChange} 
-                                placeholder="Event Name" 
-                                required 
+                            <input
+                                type="text"
+                                name="eventName"
+                                value={formData.eventName}
+                                onChange={handleFormChange}
+                                placeholder="Event Name"
+                                required
                             />
-                            <input 
-                                type="text" 
-                                name="organizer" 
-                                value={formData.organizer} 
-                                onChange={handleFormChange} 
-                                placeholder="Who is Conducting" 
+                            <input
+                                type="text"
+                                name="organizer"
+                                value={formData.organizer}
+                                onChange={handleFormChange}
+                                placeholder="Organizer"
                             />
-                            <input 
-                                type="text" 
-                                name="location" 
-                                value={formData.location} 
-                                onChange={handleFormChange} 
-                                placeholder="Where it is Conducting" 
+                            <input
+                                type="text"
+                                name="location"
+                                value={formData.location}
+                                onChange={handleFormChange}
+                                placeholder="Location"
                             />
-                            <input 
-                                type="text" 
-                                name="cost" 
-                                value={formData.cost} 
-                                onChange={handleFormChange} 
-                                placeholder="Free or Cost Paying" 
+                            <input
+                                type="text"
+                                name="cost"
+                                value={formData.cost}
+                                onChange={handleFormChange}
+                                placeholder="Cost"
                             />
-                            <input 
-                                type="date" 
-                                name="date" 
-                                value={formData.date} 
-                                onChange={handleFormChange} 
-                                required 
+                            <input
+                                type="text"
+                                name="activities"
+                                value={formData.activities}
+                                onChange={handleFormChange}
+                                placeholder="Activities"
                             />
-                            <textarea 
-                                name="activities" 
-                                value={formData.activities} 
-                                onChange={handleFormChange} 
-                                placeholder="Activities Conducted on that Workshop" 
+                            <input
+                                type="date"
+                                name="date"
+                                value={formData.date}
+                                onChange={handleFormChange}
+                                placeholder="Date"
+                                required
                             />
-                            <button type="submit">Save Event</button>
+                            <input
+                                type="text"
+                                name="contactPhone"
+                                value={formData.contactPhone}
+                                onChange={handleFormChange}
+                                placeholder="Contact Phone"
+                            />
+                            <button type="submit">Add Event</button>
                         </form>
                     </div>
                 </div>
             )}
+
+            {/* Yearly Main Events Section */}
+            <div className="yearly-events">
+                <h3>Events Schedule</h3>
+                <div className="events-list">
+                    {yearlyEvents.map((event) => {
+                        const eventDate = new Date(event.date);
+                        const formattedDate = `${String(eventDate.getDate()).padStart(2, '0')}/${String(eventDate.getMonth() + 1).padStart(2, '0')}`;
+                        return (
+                            <div key={event.date} className="event-item" onClick={() => handleYearlyEventClick(eventDate)}>
+                               
+                                <div className="event-date-circle">
+                                    {formattedDate}
+                                </div>
+                                <span className="event-name">{event.eventName}</span>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
         </div>
     );
 }

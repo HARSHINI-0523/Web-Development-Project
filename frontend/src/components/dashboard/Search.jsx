@@ -44,9 +44,7 @@ function Search() {
       };
     return (
         <div className="container">
-            <h2 className='mb-3'>
-                Search
-            </h2>
+            
 
             <form onSubmit={handleSubmit(onSearch)}>
                 <div className="search-bar">

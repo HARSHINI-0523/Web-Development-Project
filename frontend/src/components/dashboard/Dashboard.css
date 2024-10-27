@@ -67,18 +67,19 @@
 }
 
 /* Additional styling to prevent shift on hover */
-.sidebar-link svg {
+ .sidebar-link svg {
     margin-right: 10px;
-}
+} 
 
 
-.sidebar-more {
+ .sidebar-more {
     padding: 20px 0;
+    text-align: left;
 }
 
 .more-options {
     padding: 0 20px;
-}
+} 
 
 .settings-section {
     display: flex;
@@ -99,7 +100,7 @@
 }
 
 .settings-button:hover {
-    background-color: #34495e;
+    background-color:#312c16;
     color: #fff;
 }
 
@@ -146,10 +147,9 @@
     flex: 1;
     margin-left: 250px;  
     width:980px;
-    padding: 20px;
-/*     
-    background-image: url('https://png.pngtree.com/background/20210715/original/pngtree-yellow-watercolor-paper-smudge-background-picture-image_1251979.jpg'); */
-    background-color: white;
+    padding: 20px;   
+    background-image: url('https://png.pngtree.com/background/20210715/original/pngtree-yellow-watercolor-paper-smudge-background-picture-image_1251979.jpg'); 
+    /* background-color: white; */
     background-repeat: no-repeat;
     background-size: cover;
     overflow-y: auto;

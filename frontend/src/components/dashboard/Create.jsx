@@ -78,7 +78,7 @@ const Create = ({ onClose, username }) => {
                     <>
                         <h2>Create a Post</h2>
                         <img src={gifUrl} alt="Welcome GIF style={{ width: '50%', height: 'auto', marginBottom: '20px',marginLeft:'100px' }" className="welcome-gif" />
-                        <p>Welcome back, {username}. What do you want to post today?</p>
+                        <p>Welcome back. What do you want to post today?</p>
 
                         <button
                             onClick={() => setShowCategoryOptions(!showCategoryOptions)}

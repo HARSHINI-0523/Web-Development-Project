@@ -80,7 +80,7 @@ function Login() {
         </div>
       <div className="login-box">  
         <div className="login-form">
-          <h2>Login</h2>
+          <h2 className="text-center">Login</h2>
           {generalError && (
             <div className="error-message">{generalError}</div>
           )}

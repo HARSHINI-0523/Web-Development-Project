@@ -29,7 +29,6 @@ function Profile() {
     const [commentsModalIsOpen, setCommentsModalIsOpen] = useState(false); // New modal state for comments
     const [selectedPost, setSelectedPost] = useState(null); // For storing selected post details
     let { state } = useLocation();
-    console.log(state);
     useEffect(() => {
         const fetchProfile = async () => {
             try {

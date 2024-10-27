@@ -39,39 +39,38 @@ function Dashboard() {
                     <Link to="/dashboard/art-showcase" className="sidebar-link">
                         <FaPalette /> Art Showcase
                     </Link>
+                    <Link to="/dashboard/search" className="sidebar-link">
+                        <FaSearch /> Search
+                    </Link>
                     <button className="sidebar-link" onClick={openCreateModal}>
                         <FaPlus /> Create
                     </button>
                     <Link to="/dashboard/events" className="sidebar-link">
                         <FaNetworkWired /> Event
                     </Link>
-                    <Link to="/dashboard/resources" className="sidebar-link">
+                    {/* <Link to="/dashboard/resources" className="sidebar-link">
                         <FaBook /> Resources
-                    </Link>
+                    </Link> */}
                     <Link to="/dashboard/profile" className="sidebar-link">
                         <FaUser /> Profile
                     </Link>
-                    <Link to="/dashboard/search" className="sidebar-link">
-                        <FaSearch /> Search
-                    </Link>
-                </div>
-                <div className="sidebar-more">
+                    
+                
+                    </div>
+                    <div className="sidebar-more">
                     <div className="settings-section">
                         <button
-                            className="sidebar-link settings-button"
+                            className="sidebar-link "
                             onClick={toggleSettings}
                             aria-expanded={isSettingsOpen}
                             aria-controls="settings-submenu"
                         >
-                            <FaCog /> Settings {isSettingsOpen ? <FaChevronUp /> : <FaChevronDown />}
+                            <FaCog /> Settings {isSettingsOpen ? <FaChevronUp style={{paddingLeft:7}}/> : <FaChevronDown style={{paddingLeft:7}}/>}
                         </button>
                         {isSettingsOpen && (
                             <div className="settings-submenu" id="settings-submenu">
                                 <Link to="/dashboard/edit-profile" className="submenu-link">
                                     Edit Profile
-                                </Link>
-                                <Link to="/dashboard/activity" className="submenu-link">
-                                    Activity
                                 </Link>
                                 <button className="submenu-link logout-button" onClick={handleLogout}>
                                     Logout <FaSignOutAlt />
