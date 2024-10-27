@@ -15,13 +15,12 @@ const DeleteAccountModal = ({ onClose, onConfirm }) => {
     return (
         <div className="modal-overlay">
             <div className="modal-content">
-
                 <h3>Delete Account</h3>
                 <Lottie
                     options={defaultOptions}
                     height={100}
                     width={100} />
-                <p>Are you sure you want to delete your account? <strong>ArtFusion will not be same without you.</strong></p>
+                <p>Are you sure you want to delete your account? ArtFusion will not be same without you.</p>
                 <div className="modal-actions">
                     <button onClick={onClose}>Cancel</button>
                     <button onClick={onConfirm}>Delete</button>

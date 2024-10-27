@@ -61,7 +61,7 @@ function SignUp() {
                 let response = await API.post('/auth/signup', formData);
                 localStorage.setItem('token', response.data.token);
                 console.log(formData); // Fixed typo
-                navigate('/edit-profile'); 
+                navigate('/dashboard/edit-profile'); 
             } catch (error) {
                 if (error.response) {
                     if (error.response.status === 409) {
