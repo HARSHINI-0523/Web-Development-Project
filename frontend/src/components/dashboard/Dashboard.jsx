@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { 
-    FaUser, FaPalette, FaPlus, FaNetworkWired, FaBook, 
-    FaCog, FaSignOutAlt, FaChevronDown, FaChevronUp, FaSearch 
+    FaUser, FaPalette, FaPlus, FaNetworkWired, FaSearch, 
+    FaCog, FaSignOutAlt, FaChevronDown, FaChevronUp 
 } from 'react-icons/fa';
+import { MdDelete } from "react-icons/md";
 import './Dashboard.css';
-import Create from './Create';  // Import Create component
-
+import Create from './Create';
+import DeleteAccountModal from './DeleteAccountModal'; 
+import API from "../../api/axios";
 function Dashboard() {
     const navigate = useNavigate();
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-    const [isCreateOpen, setIsCreateOpen] = useState(false);  // Track modal state
+    const [isCreateOpen, setIsCreateOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); 
 
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -22,11 +25,38 @@ function Dashboard() {
     };
 
     const openCreateModal = () => {
-        setIsCreateOpen(true);  // Open the modal
+        setIsCreateOpen(true);
     };
 
     const closeCreateModal = () => {
-        setIsCreateOpen(false);  // Close the modal
+        setIsCreateOpen(false);
+    };
+
+    const openDeleteModal = () => {
+        setIsDeleteModalOpen(true);
+    };
+
+    const closeDeleteModal = () => {
+        setIsDeleteModalOpen(false);
+    };
+
+    const handleDeleteAccount = async () => {
+        const token = localStorage.getItem('token');
+        try {
+            const response = await API.delete('/user', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            // Assuming the response indicates success
+            alert(response.data.message || 'Account deleted successfully');
+            handleLogout(); // Log the user out after deletion
+        } catch (error) {
+            console.error('Error deleting account:', error);
+            alert('Failed to delete account: ' + (error.response?.data?.message || 'Please try again later.'));
+        } finally {
+            closeDeleteModal();
+        }
     };
 
     return (
@@ -48,19 +78,14 @@ function Dashboard() {
                     <Link to="/dashboard/events" className="sidebar-link">
                         <FaNetworkWired /> Event
                     </Link>
-                    {/* <Link to="/dashboard/resources" className="sidebar-link">
-                        <FaBook /> Resources
-                    </Link> */}
                     <Link to="/dashboard/profile" className="sidebar-link">
                         <FaUser /> Profile
                     </Link>
-                    
-                
-                    </div>
-                    <div className="sidebar-more">
+                </div>
+                <div className="sidebar-more">
                     <div className="settings-section">
                         <button
-                            className="sidebar-link "
+                            className="sidebar-link"
                             onClick={toggleSettings}
                             aria-expanded={isSettingsOpen}
                             aria-controls="settings-submenu"
@@ -75,6 +100,9 @@ function Dashboard() {
                                 <button className="submenu-link logout-button" onClick={handleLogout}>
                                     Logout <FaSignOutAlt />
                                 </button>
+                                <button className="submenu-link logout-button" onClick={openDeleteModal}>
+                                    Delete Account <MdDelete />
+                                </button>
                             </div>
                         )}
                     </div>
@@ -87,6 +115,13 @@ function Dashboard() {
 
             {/* Render the Create modal conditionally */}
             {isCreateOpen && <Create onClose={closeCreateModal} username="YourUsername" />}
+            {/* Render the Delete Account modal conditionally */}
+            {isDeleteModalOpen && (
+                <DeleteAccountModal
+                    onClose={closeDeleteModal}
+                    onConfirm={handleDeleteAccount}
+                />
+            )}
         </div>
     );
 }

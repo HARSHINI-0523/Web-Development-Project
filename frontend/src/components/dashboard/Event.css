@@ -300,3 +300,58 @@
 
 }
 
+/* Modal Styles */
+.deletemodal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.deletemodal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    max-width :500px;
+    text-align: center;
+}
+
+.deletemodalBtns {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+
+.deleteconfirm-btn, .deletecancel-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.deleteconfirm-btn {
+    background-color: #d9534f; /* Bootstrap Danger Color */
+    color: white;
+}
+
+.deletecancel-btn {
+    background-color: #5bc0de; /* Bootstrap Info Color */
+    color: white;
+}
+
+.show {
+    display: block; /* Show the modal */
+}
+
+.deletebtn{
+    padding:0;
+    margin:0;
+    background-color: #e7f3ff
+}

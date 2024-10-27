@@ -69,4 +69,22 @@ router.get('/year/:year', async (req, res) => {
   }
 });
 
+// Delete an event by ID
+router.delete('/:id', auth.protect, async (req, res) => {
+  const eventId = req.params.id; // Get the event ID from the request parameters
+
+  try {
+    const event = await Event.findByIdAndDelete(eventId); // Find and delete the event by ID
+
+    if (!event) {
+      return res.status(404).json({ message: 'Event not found.' });
+    }
+
+    return res.status(200).json({ message: 'Event deleted successfully.' });
+  } catch (error) {
+    console.error('Error deleting event:', error);
+    return res.status(500).json({ message: 'Internal server error.' });
+  }
+});
+
 module.exports = router;

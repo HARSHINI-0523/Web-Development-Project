@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Event.css';
 import API from '../../api/axios';
+import { MdDeleteOutline } from "react-icons/md";
 
 function Event() {
     const [currentMonth, setCurrentMonth] = useState(new Date(2024, 9)); // October 2024
@@ -9,6 +10,8 @@ function Event() {
     const [events, setEvents] = useState({});
     const [yearlyEvents, setYearlyEvents] = useState([]); // State for yearly events
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+    const [eventToDelete, setEventToDelete] = useState(null);
     const [formData, setFormData] = useState({
         eventName: '',
         organizer: '',
@@ -22,6 +25,9 @@ function Event() {
     const modalRef = useRef(null);
 
     useEffect(() => {
+
+        fetchEvents();
+    }, [currentMonth]);
     const fetchEvents = async () => {
         try {
             const res = await API.get(`/events/month/${currentMonth.getFullYear()}/${currentMonth.getMonth() + 1}`);
@@ -36,7 +42,7 @@ function Event() {
             }, {});
 
             setEvents(formattedEvents);
-            
+
             // Update the yearly events state as well
             setYearlyEvents(data.map(event => ({
                 date: event.date,
@@ -49,10 +55,38 @@ function Event() {
             console.error('Error fetching events', error);
         }
     };
+    const openDeleteModal = (eventId) => {
+        setEventToDelete(eventId);
+        setDeleteModalIsOpen(true);
+    };
 
-    fetchEvents();
-}, [currentMonth]);
+    const closeDeleteModal = () => {
+        setDeleteModalIsOpen(false);
+        setEventToDelete(null);
+    };
 
+    const confirmDeleteEvent = async () => {
+        const token = localStorage.getItem('token');
+        try {
+            await API.delete(`/events/${eventToDelete}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            // Remove the deleted event from the state
+            setEvents((prev) => {
+                const updatedEvents = { ...prev };
+                delete updatedEvents[selectedDate];
+                return updatedEvents;
+            });
+            // Close the modal
+            closeDeleteModal();
+        } catch (error) {
+            console.error('Error deleting event:', error);
+            alert('Failed to delete event. Please try again.');
+        }
+        fetchEvents();
+    };
 
     const today = new Date();
 
@@ -112,55 +146,55 @@ function Event() {
         e.preventDefault();
         const { date, eventName, organizer, location, cost, activities, contactPhone } = formData;
         console.log(formData);
-        
+
         if (date && eventName) {
-          const token = localStorage.getItem('token');
-          try {
-            // Send event data to the backend using a POST request
-            const response = await API.post('/events', formData, {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            });
-      
-            // If the request is successful, proceed with the rest of the code
-            const newEvent = response.data; // Axios directly gives you the response data
-            console.log("newEvent", newEvent);
-      
-            // Update the events and yearlyEvents state with the new event
-            setEvents((prev) => ({
-              ...prev,
-              [date]: newEvent,
-            }));
-      
-            setYearlyEvents((prev) => [
-              ...prev,
-              { date: date, eventName: eventName, location: location },
-            ]);
-      
-            // Close the modal and reset the form data
-            closeModal();
-            setFormData({
-              eventName: '',
-              organizer: '',
-              location: '',
-              cost: '',
-              activities: '',
-              date: '',
-              contactPhone: '',
-            });
-          } catch (error) {
-            // Handle the error response from the backend
-            console.error('Error submitting event:', error);
-            const errorMessage = error.response?.data?.message || 'Failed to add event. Please try again later.';
-            alert('Failed to add event: ' + errorMessage);
-          }
+            const token = localStorage.getItem('token');
+            try {
+                // Send event data to the backend using a POST request
+                const response = await API.post('/events', formData, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                // If the request is successful, proceed with the rest of the code
+                const newEvent = response.data; // Axios directly gives you the response data
+                console.log("newEvent", newEvent);
+
+                // Update the events and yearlyEvents state with the new event
+                setEvents((prev) => ({
+                    ...prev,
+                    [date]: newEvent,
+                }));
+
+                setYearlyEvents((prev) => [
+                    ...prev,
+                    { date: date, eventName: eventName, location: location },
+                ]);
+
+                // Close the modal and reset the form data
+                closeModal();
+                setFormData({
+                    eventName: '',
+                    organizer: '',
+                    location: '',
+                    cost: '',
+                    activities: '',
+                    date: '',
+                    contactPhone: '',
+                });
+            } catch (error) {
+                // Handle the error response from the backend
+                console.error('Error submitting event:', error);
+                const errorMessage = error.response?.data?.message || 'Failed to add event. Please try again later.';
+                alert('Failed to add event: ' + errorMessage);
+            }
         } else {
-          alert('Please fill out the event name and date.');
+            alert('Please fill out the event name and date.');
         }
-      };
-      
-      
+    };
+
+
 
     const daysInMonth = getDaysInMonth(currentMonth.getFullYear(), currentMonth.getMonth());
     const firstDay = getFirstDayOfMonth(currentMonth.getFullYear(), currentMonth.getMonth());
@@ -212,7 +246,7 @@ function Event() {
                                     key={day}
                                     className={`calendar-date ${isToday ? 'today' : ''}${isEventDay ? 'event-day' : ''}`}
                                     onClick={() => handleDateClick(day)}
-                                    style={{ backgroundColor: isToday ? 'blue' : (isEventDay ? 'red' : 'initial' ) , color: isToday ? 'white' : 'initial'}} // Highlight in red if it's an event day
+                                    style={{ backgroundColor: isToday ? 'blue' : (isEventDay ? 'red' : 'initial'), color: isToday ? 'white' : 'initial' }} // Highlight in red if it's an event day
                                 >
                                     {day}
                                 </div>
@@ -225,19 +259,36 @@ function Event() {
                     <h3>Events for {selectedDate || today.toISOString().split('T')[0]}</h3>
                     {selectedDate && events[selectedDate] ? (
                         <div>
-                            <h4>{events[selectedDate].eventName}</h4>
+                            <div className='d-flex justify-content-between'>
+                                <h4>{events[selectedDate].eventName}</h4>
+                                <button onClick={() => openDeleteModal(events[selectedDate]._id)} className='deletebtn fs-4'><MdDeleteOutline /></button>
+                            </div>
                             <p>Organizer: {events[selectedDate].organizer}</p>
                             <p>Location: {events[selectedDate].location}</p>
                             <p>Cost: {events[selectedDate].cost}</p>
                             <p>Activities: {events[selectedDate].activities}</p>
                             <p>Contact: {events[selectedDate].contactPhone}</p>
+
                         </div>
                     ) : (
                         <p>No events found for this date.</p>
                     )}
+
                 </div>
             </div>
-
+            {/* Delete Confirmation Modal */}
+            {deleteModalIsOpen && (
+                <div className={`deletemodal ${deleteModalIsOpen ? 'show' : ''}`}>
+                    <div className="deletemodal-content">
+                        <h3>Confirm Deletion</h3>
+                        <p>Are you sure you want to delete this event?</p>
+                        <div className="deletemodalBtns ">
+                            <button onClick={confirmDeleteEvent} className="deleteconfirm-btn">Yes, Delete</button>
+                            <button onClick={closeDeleteModal} className="deletecancel-btn">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            )}
             {isModalOpen && (
                 <div className={`modal ${isModalOpen ? 'show' : ''}`}>
                     <div className="modal-content" ref={modalRef}>
@@ -312,7 +363,7 @@ function Event() {
                         const formattedDate = `${String(eventDate.getDate()).padStart(2, '0')}/${String(eventDate.getMonth() + 1).padStart(2, '0')}`;
                         return (
                             <div key={event.date} className="event-item" onClick={() => handleYearlyEventClick(eventDate)}>
-                               
+
                                 <div className="event-date-circle">
                                     {formattedDate}
                                 </div>

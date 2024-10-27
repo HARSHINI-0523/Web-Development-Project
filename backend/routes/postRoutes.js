@@ -44,7 +44,29 @@ router.get('/:postId/comments', async (req, res) => {
     }
 });
 
+router.delete('/:id', auth.protect , async (req, res) => {
+    try {
+        const postId = req.params.id;
+        console.log(postId);
+        const post = await Post.findById(postId);
 
+        // Check if the post exists
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        // Check if the user is the owner of the post
+        if (post.user.toString() !== req.user.id) {
+            return res.status(403).json({ message: 'You are not authorized to delete this post' });
+        }
+
+        await Post.findByIdAndDelete(postId);
+        res.status(200).json({ message: 'Post deleted successfully' });
+    } catch (error) {
+        console.error('Delete Post Error:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
 // Like a post
 router.patch('/:postId/like', auth.protect, async (req, res) => {
     try {

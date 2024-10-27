@@ -5,6 +5,7 @@ import { FaRegCommentAlt } from "react-icons/fa";
 import { BiRepost } from "react-icons/bi";
 import { PiHandHeartFill } from "react-icons/pi";
 import { PiHandHeartLight } from "react-icons/pi";
+import { MdDeleteOutline } from "react-icons/md";
 import Modal from 'react-modal';
 import { useLocation } from 'react-router-dom';
 
@@ -28,6 +29,9 @@ function Profile() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [commentsModalIsOpen, setCommentsModalIsOpen] = useState(false); // New modal state for comments
     const [selectedPost, setSelectedPost] = useState(null); // For storing selected post details
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+    const [postToDelete, setPostToDelete] = useState(null);
+
     let { state } = useLocation();
     useEffect(() => {
         const fetchProfile = async () => {
@@ -35,14 +39,14 @@ function Profile() {
                 let response;
                 const token = localStorage.getItem('token'); // Get JWT token
                 if (state == null) {
-                     
+
                     response = await API.get('/user/profile', {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
                     });
                 }
-                else{
+                else {
                     response = await API.get(`/user/profile/${state._id}`, {
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -65,21 +69,21 @@ function Profile() {
         try {
             let response;
             const token = localStorage.getItem('token');
-            if(state==null){
-            response = await API.get('/posts/user', {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-        }
-        else{
-            response = await API.get(`/posts/user/${state._id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
+            if (state == null) {
+                response = await API.get('/posts/user', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
                     },
-                    });
+                });
+            }
+            else {
+                response = await API.get(`/posts/user/${state._id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                });
 
-        }
+            }
             setPosts(response.data);
         } catch (err) {
             console.error('Fetch Posts Error:', err);
@@ -128,6 +132,40 @@ function Profile() {
             setError('Failed to update like status.');
         }
     };
+    const openDeleteModal = (postId) => {
+        setPostToDelete(postId);
+        setDeleteModalIsOpen(true);
+    };
+
+    const closeDeleteModal = () => {
+        setDeleteModalIsOpen(false);
+        setPostToDelete(null);
+    };
+
+    const confirmDeletePost = async () => {
+        await handleDeletePost(postToDelete);
+        closeDeleteModal();
+    };
+
+    const handleDeletePost = async (postId) => {
+        const token = localStorage.getItem('token');
+        try {
+            // Make API call to delete the post
+            await API.delete(`/posts/${postId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            // Remove the post from the state
+            setPosts(posts.filter(post => post._id !== postId));
+        } catch (err) {
+            console.error('Delete Post Error:', err);
+            setError('Failed to delete post.');
+        }
+        fetchPosts();
+    };
+
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
@@ -282,6 +320,12 @@ function Profile() {
                                             style={{ padding: 0, margin: 0, marginBottom: 15, border: 'none', background: 'none' }}>
                                             <BiRepost className='fs-2' />
                                         </button>
+                                        <button
+                                            onClick={() => openDeleteModal(post._id)} // Open delete confirmation modal
+                                            style={{ padding: 0, margin: 0, marginBottom: 15, border: 'none', background: 'none' }}>
+                                            <MdDeleteOutline className='fs-2' />
+                                        </button>
+
 
                                     </div>
                                 </div>
@@ -300,9 +344,9 @@ function Profile() {
                         reposts.map((repost) => (
                             <div key={repost._id} className="post-card">
                                 <img src={`http://localhost:5000/uploads/${encodeURIComponent(repost.imageUrl)}`}
-                                 alt="Repost" className="repost-image" />
+                                    alt="Repost" className="repost-image" />
                                 <p>{repost.caption}</p>
-                                
+
                             </div>
                         ))
                     ) : (
@@ -351,10 +395,30 @@ function Profile() {
                             style={{ padding: 0, margin: 0 }}>
                             <BiRepost className='fs-2' />
                         </button>
+                        <button
+                            onClick={() => openDeleteModal(selectedPost._id)} className='modalBtn'
+                            style={{ padding: 0, margin: 0 }}>
+                            <MdDeleteOutline className='fs-2' />
+                        </button>
+
 
                     </div>
                 </Modal>
             )}
+            {/* Delete Confirmation Modal */}
+            <Modal
+                isOpen={deleteModalIsOpen}
+                onRequestClose={closeDeleteModal}
+                contentLabel="Confirm Delete"
+                className="DeleteModal"
+                overlayClassName="DeleteOverlay"
+            >
+                <p className='text-center'>Are you sure you want to delete this post?</p>
+                <div className="modal-buttons">
+                    <button className="confirm-btn" onClick={confirmDeletePost}>Delete</button>
+                    <button onClick={closeDeleteModal} className='cancel-btn'>Cancel</button>
+                </div>
+            </Modal>
 
             {/* Comments Modal */}
             {commentsModalIsOpen && (

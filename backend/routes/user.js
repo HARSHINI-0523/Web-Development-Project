@@ -62,4 +62,15 @@ router.put('/profile', protect, async (req, res) => {
     }
 });
 
+router.delete('/', protect , async (req, res) => {
+    try {
+        const userId = req.user.id; // Get the user ID from the token
+        await User.findByIdAndDelete(userId); // Delete the user
+        
+        res.status(200).json({ message: 'Account deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting account:', error);
+        res.status(500).json({ message: 'Failed to delete account' });
+    }
+});
 module.exports = router;
