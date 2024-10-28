@@ -117,10 +117,10 @@ function Login() {
               Login
             </button>
           </form>
-          <div className="divider">OR</div>
+          {/* <div className="divider">OR</div>
           <button onClick={handleGoogleLogin} className="google-login-button">
             Login with Google
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

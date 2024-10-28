@@ -22,7 +22,7 @@ function Services() {
            <div className="service-content ">
            <center><h3>Art Showcase</h3></center>
           <p className="service-description text-justify">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Libero modi adipisci ut blanditiis consequatur nemo aliquid consequuntur reprehenderit repellat, odio reiciendis sit, eveniet veniam qui voluptas quia veritatis nulla maxime exercitationem nostrum! Doloribus, quia aliquam explicabo laudantium odio ducimus, rem recusandae deserunt animi, temporibus esse voluptatum rerum sequi tempora delectus.
+          Welcome to our Art Showcase, a vibrant platform where artists and art enthusiasts can come together to share and discover creative works. This feature allows users to post their artwork—whether it's visual art, poetry, stories or other forms of expression and engage with a diverse community. To enhance your experience, we offer a specialized category where you can easily navigate through relevant submissions, making it simple to find inspiration and connect with like-minded creators. Join us in celebrating creativity and showcasing talent, as every contribution enriches our artistic community.
           </p>
           </div>
         </div>
@@ -35,7 +35,7 @@ function Services() {
            <div className="service-content">
            <center><h3>Artist Networking</h3></center>
           <p className="service-description text-justify">
-          At ArtMaison, we believe that collaboration and networking are essential components of an artist's growth and success. Our platform provides a unique opportunity for artists to connect with fellow creatives, share ideas, and learn from each other's experiences. By facilitating meaningful connections, we aim to break down geographical and cultural barriers, allowing artists to tap into a global network of like-minded individuals. 
+          Welcome to our Artist Networking hub - a dynamic space designed to foster connections and collaborations among creatives. Here, artists can seamlessly share and organize events, creating a vibrant tapestry of artistic engagement. As users navigate through our platform, they will encounter a dedicated section showcasing upcoming events in a visually engaging format with detailed descriptions, gaining insights into the essence and purpose of each gathering.Join us in this exciting journey of artistic networking, where every event is a gateway to inspiration and collaboration!
 
           </p>
           </div>
@@ -49,7 +49,7 @@ function Services() {
           <div className="service-content">
           <center><h3>Art Resources</h3></center>
           <p className="service-description text-justify">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia facilis cum magnam ut! Illum quasi nemo ipsa aspernatur pariatur saepe magnam, similique adipisci ex id, facilis, numquam voluptates nulla obcaecati ut repellat nam totam cupiditate aut officia officiis. Dicta pariatur ducimus dolor quaerat, est excepturi eveniet voluptas illum deserunt laborum.
+          Welcome to our Art Resources section—a curated hub of knowledge, guidance, and inspiration for artists and art enthusiasts alike. The Recommended Resources feature insightful articles and videos on various art techniques, creative processes, and professional growth, while the Other Resources provide access to top-tier art-related websites and platforms. With these carefully curated resources, you can enhance your skills, expand your artistic horizons, and connect more deeply with the vibrant and diverse world of art.
           </p>
           </div>
         </div>

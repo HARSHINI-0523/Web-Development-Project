@@ -75,6 +75,9 @@ function Dashboard() {
                     <button className="sidebar-link" onClick={openCreateModal}>
                         <FaPlus /> Create
                     </button>
+                    <Link to="/dashboard/resources" className="sidebar-link">
+                        <FaNetworkWired /> Resources
+                    </Link>
                     <Link to="/dashboard/events" className="sidebar-link">
                         <FaNetworkWired /> Event
                     </Link>

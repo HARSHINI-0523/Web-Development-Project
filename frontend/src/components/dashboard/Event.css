@@ -244,9 +244,12 @@
 /* Modal content area */
 .modal-content {
     background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
     padding: 15px;
     border-radius: 8px;
-    width: 300px; /* Smaller box */
+    max-width: 500px; /* Smaller box */
     position: relative;
 }
 
@@ -265,7 +268,7 @@
 }
 
 /* Cross button for closing modal */
-.modal-header button.close {
+.modal-header .close {
     position: absolute; 
     right: -20px; /* Distance from right */
     cursor: pointer;
@@ -273,7 +276,7 @@
     background: none;
     border: none;
     color: #333;
-    margin-top: -70px;
+    margin-top: 0px;
 }
 
 .modal-header button.close:hover {
@@ -285,7 +288,7 @@
 .modal-content select,
 .modal-content textarea {
     display: block;
-    width: 100%;
+    max-width: 500px;
     padding: 8px;
     margin-bottom: 10px;
     border-radius: 5px;
@@ -346,7 +349,7 @@
     color: white;
 }
 
-.show {
+.deletemodal .show {
     display: block; /* Show the modal */
 }
 

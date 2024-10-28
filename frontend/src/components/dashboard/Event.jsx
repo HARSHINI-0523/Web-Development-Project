@@ -292,8 +292,9 @@ function Event() {
             {isModalOpen && (
                 <div className={`modal ${isModalOpen ? 'show' : ''}`}>
                     <div className="modal-content" ref={modalRef}>
-                        <h3>Add New Event</h3>
+                        
                         <div className="modal-header">
+                            <h3>Add New Event</h3>
                             <button className="close" onClick={closeModal}>✖</button>
                         </div>
                         <form onSubmit={handleFormSubmit}>
