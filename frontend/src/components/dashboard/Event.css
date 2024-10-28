@@ -219,81 +219,105 @@
     background-color: #0056b3;
 }
 
-/* Modal styles */
-.modal {
+.createEventmodal {
     display: none; /* Hidden by default */
     position: fixed;
-    top: 50%;
-    left: 50%;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Background dimming */
-    padding: 100px;
+    background-color: rgba(0, 0, 0, 0.6); /* Dimmed background */
     align-items: center;
+    justify-content: center;
     z-index: 1000;
     opacity: 0;
-    transition: visibility 0s, opacity 0.3s;
+    transition: opacity 0.3s ease, visibility 0s 0.3s; /* Fade-in effect */
 }
 
 /* Show the modal when open */
-.modal.show {
+.createEventmodal.show {
     display: flex;
-    visibility: visible;
     opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease;
 }
 
 /* Modal content area */
-.modal-content {
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    justify-items: center;
-    padding: 15px;
-    border-radius: 8px;
-    max-width: 500px; /* Smaller box */
+.createEventmodal-content {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    
+    max-width: 600px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     position: relative;
 }
 
 /* Modal header (title and close button) */
-.modal-header {
+.createEventmodal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative; /* Make this relative to position child elements */
-    padding: 10px 0;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ccc;
 }
 
-.modal-header h3 {
+.createEventmodal-header h3 {
     margin: 0;
-    flex: 1; /* Allow title to take available space */
+    font-size: 20px;
+    color: #333;
 }
 
-/* Cross button for closing modal */
-.modal-header .close {
-    position: absolute; 
-    right: -20px; /* Distance from right */
-    cursor: pointer;
-    font-size: 24px;
+/* Close button */
+.createEventmodal-header .close {
     background: none;
     border: none;
+    font-size: 20px;
+    cursor: pointer;
     color: #333;
-    margin-top: 0px;
+    padding: 5px;
+    transition: color 0.2s ease;
 }
 
-.modal-header button.close:hover {
-    color: #f00;
+.createEventmodal-header .close:hover {
+    color: #ff5c5c;
 }
 
-/* Form inside the modal */
-.modal-content input,
-.modal-content select,
-.modal-content textarea {
-    display: block;
-    max-width: 500px;
-    padding: 8px;
-    margin-bottom: 10px;
-    border-radius: 5px;
+/* Form styling */
+.createEventmodal-content form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+.createEventmodal-content input,
+.createEventmodal-content select,
+.createEventmodal-content textarea,
+.createEventmodal-content date {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border-radius: 8px;
     border: 1px solid #ccc;
+    font-size: 14px;
 }
+
+/* Submit button */
+.createEventmodal-content button[type="submit"] {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.createEventmodal-content button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
 
 .yearly-events {
     margin-top: 20px;

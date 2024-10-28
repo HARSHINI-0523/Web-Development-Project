@@ -290,10 +290,10 @@ function Event() {
                 </div>
             )}
             {isModalOpen && (
-                <div className={`modal ${isModalOpen ? 'show' : ''}`}>
-                    <div className="modal-content" ref={modalRef}>
+                <div className={`createEventmodal ${isModalOpen ? 'show' : ''}`}>
+                    <div className="createEventmodal-content" ref={modalRef}>
                         
-                        <div className="modal-header">
+                        <div className="createEventmodal-header">
                             <h3>Add New Event</h3>
                             <button className="close" onClick={closeModal}>✖</button>
                         </div>

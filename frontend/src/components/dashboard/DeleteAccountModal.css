@@ -1,4 +1,4 @@
-.modal-overlay {
+.deleteAccountmodal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -11,18 +11,33 @@
     z-index: 1000;
 }
 
-.modal-content {
+.deleteAccountmodal-content {
     background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 400px;
+    padding: 25px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 420px;
     text-align: center;
 }
 
-.modal-actions {
+.deleteAccountmodal-actions {
     margin-top: 20px;
 }
 
-.modal-actions button {
+.deleteAccountmodal-actions button {
     margin: 0 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s ease;
+}
+
+.deleteAccountmodal-actions button:hover {
+    background-color: #f0f0f0;
+}
+
+.deleteAccountmodal-actions button:active {
+    transform: scale(0.98);
 }

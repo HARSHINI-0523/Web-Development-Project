@@ -123,6 +123,7 @@ function Dashboard() {
                 <DeleteAccountModal
                     onClose={closeDeleteModal}
                     onConfirm={handleDeleteAccount}
+                    className='deleteAcoountModal'
                 />
             )}
         </div>
