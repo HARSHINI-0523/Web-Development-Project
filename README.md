@@ -1,4 +1,4 @@
-# 🎨 ArtFusion
+# ArtFusion
 
 A vibrant **MERN stack-based platform** designed for artists and art enthusiasts to share their creativity, discover new artwork, and connect with fellow creators. ArtFusion combines community engagement with an intuitive user experience — featuring profiles, art sharing, commenting, reposting, and collaborative events.
 
