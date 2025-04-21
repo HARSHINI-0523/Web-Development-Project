@@ -68,4 +68,4 @@ npm run dev
 
 ### 🤝 Contributing
 Feel free to fork this repo, raise issues, or open pull requests to contribute!
-We welcome contributions to improve ArtFusion!
+We welcome contributions to improve ArtFusion
