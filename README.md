@@ -4,7 +4,7 @@ A vibrant **MERN stack-based platform** designed for artists and art enthusiasts
 
 ---
 
-🌐 **Live Website**: [https://artfusion-app.vercel.app](https://art-fusion-bay.vercel.app/) *(replace with your actual deployed link)*
+🌐 **Live Website**: [https://artfusion-app.vercel.app](https://art-fusion-bay.vercel.app/) 
 
 ---
 
